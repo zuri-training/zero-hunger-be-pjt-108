@@ -11,7 +11,7 @@ const ErrorHandler = require("../utils/errorHandler");
  */
 
 exports.signUp = asyncHandler(async(req, res, next) => {
-  const {firstName, lastName, email, password, passwordConfirm} = req.body 
+  const {firstName, lastName, email, password} = req.body 
   
 
   const existingUser = await User.findOne({email})
@@ -27,8 +27,6 @@ exports.signUp = asyncHandler(async(req, res, next) => {
     lastName,
     email,
     password,
-    passwordConfirm,
-    role,
     ...req.body
   });
 

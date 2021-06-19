@@ -4,7 +4,7 @@ class ErrorHandler extends Error {
     this.statusCode = statusCode;
     this.status = `${statusCode}`.startsWith('4') ? 'fail' : 'error';
 
-    if (process.env.NODE_ENV === production){
+    if (process.env.NODE_ENV === 'production'){
       Error.captureStackTrace(this, this.constructor);
     }
   }
