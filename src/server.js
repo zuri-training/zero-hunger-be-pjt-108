@@ -19,3 +19,12 @@ const port = process.env.PORT || PORT;
 // Listen to connection
 app.listen(port, () => console.log(`server running on port ${port}`));
 
+
+// Handling unhandled promise rejections
+process.on('unhandledRejection', (err, promise) => {
+  console.log(`Error: ${err.message}`);
+  // close server and exit
+  server.close(() => process.exit(1));
+});
+
+
