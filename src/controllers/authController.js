@@ -2,7 +2,8 @@ const asyncHandler = require("../middlewares/asyncHandler");
 const User = require("../model/user");
 const createSendToken = require("../utils/createSendToken");
 const ErrorHandler = require("../utils/errorHandler");
-
+const { UserAuth } = require("../services/auth");
+const Auth = new UserAuth();
 
 /**
  * @desc Register User
@@ -10,26 +11,45 @@ const ErrorHandler = require("../utils/errorHandler");
  * @access Public
  */
 
-exports.signUp = asyncHandler(async(req, res, next) => {
-  const {firstName, lastName, email, password} = req.body 
-  
+exports.signUp = asyncHandler(async (req, res, next) => {
+  const { firstName, lastName, email, password, cpassword } = req.body;
 
-  const existingUser = await User.findOne({email})
-
-  if (existingUser) {
-    return next(
-      new ErrorHandler('User already exists, please create a new account', 404)
+  try {
+    const newUser = await Auth.signUp(
+      firstName,
+      lastName,
+      email,
+      password,
+      cpassword
     );
+
+    return res.status(newUser.status).json({
+      data: newUser.data,
+    });
+  } catch (err) {
+    return res.status(500).json({
+      error: err,
+    });
   }
+});
 
-  const newUser = await User.create({
-    firstName,
-    lastName,
-    email,
-    password,
-    ...req.body
-  });
+/**
+ * @desc Login User
+ * @route POST /api/auth/login
+ * @access Public
+ */
 
-  createSendToken(newUser, 201, res);
+exports.login = asyncHandler(async (req, res, next) => {
+  const { email, password } = req.body;
 
-})
+  try {
+    const user = await Auth.login(email, password);
+    return res.status(user.status).json({
+      data: user.data,
+    });
+  } catch (err) {
+    return res.status(500).json({
+      error: err.error,
+    });
+  }
+});
