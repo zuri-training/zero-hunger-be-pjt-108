@@ -1,7 +1,7 @@
-const mongoose = require('mongoose');
-const bcrypt = require('bcrypt');
+const mongoose = require("mongoose");
+const bcrypt = require("bcrypt");
 
-  const userSchema = new mongoose.Schema(
+const userSchema = new mongoose.Schema(
   {
     // Define user properties
     firstName: {
@@ -18,12 +18,12 @@ const bcrypt = require('bcrypt');
     },
     password: {
       type: String,
-      select: false,
+      required: true,
     },
     userRole: {
       type: String,
-      enum: ['admin', 'organization', 'individual', 'ngo'],
-      default: 'individual',
+      enum: ["admin", "organization", "individual", "ngo"],
+      default: "individual",
     },
     isAdmin: {
       type: Boolean,
@@ -33,15 +33,13 @@ const bcrypt = require('bcrypt');
   { timestamps: true }
 );
 
-
 // Hash password using bcrypt js
-userSchema.pre('save', async function(next) {
-
-  if (!this.isModified('password')){
-    next()
+userSchema.pre("save", async function (next) {
+  if (!this.isModified("password")) {
+    next();
   }
 
-this.password = await  bcrypt.hash(this.password, 10)
-})
+  this.password = await bcrypt.hash(this.password, 10);
+});
 
-module.exports = mongoose.model('user', userSchema);
+module.exports = mongoose.model("user", userSchema);
