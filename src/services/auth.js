@@ -50,6 +50,7 @@ class UserAuth {
       email,
       password,
     });
+
     const newUserToken = UserToken.createAndSendToken(newUser._id);
 
     return {
