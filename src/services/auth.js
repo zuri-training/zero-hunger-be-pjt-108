@@ -92,7 +92,7 @@ class UserAuth {
       user.data.password
     );
 
-    if (hashUserPassword === false) {
+    if (!hashUserPassword) {
       return {
         status: 400,
         data: {
