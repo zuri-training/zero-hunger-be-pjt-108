@@ -109,7 +109,7 @@ Response example:
 
 ### Login
 
-`POST http://localhost:9005/api/v1/auth/signup`
+`POST http://localhost:9005/api/v1/auth/login`
 
 #### Request body key/value pair to login
 
