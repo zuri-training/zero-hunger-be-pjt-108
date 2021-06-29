@@ -49,6 +49,7 @@ class UserAuth {
 
     return {
       status: 201,
+      message: "Account created successfully!",
       data: {
         user: {
           firstName: newUser.firstName,
