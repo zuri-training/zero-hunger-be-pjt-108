@@ -1,11 +1,10 @@
-const User = require("../model/user");
 const { Password } = require("./comparePassword");
 const { Token } = require("./token");
+const { UserModel } = require("./db");
 const UserToken = new Token();
+const User = new UserModel();
 
 class UserAuth {
-  constructor() {}
-
   async signUp(firstName, lastName, email, password, cPassword) {
     if (!firstName || !lastName || !email || !password) {
       return {
@@ -34,7 +33,7 @@ class UserAuth {
       };
     }
 
-    const existingUser = await this.findUser(email);
+    const existingUser = await User.findUser(email);
 
     if (existingUser.data !== null) {
       return {
@@ -44,12 +43,7 @@ class UserAuth {
         },
       };
     }
-    const newUser = await User.create({
-      firstName,
-      lastName,
-      email,
-      password,
-    });
+    const newUser = await User.createUser(firstName, lastName, email, password);
 
     const newUserToken = UserToken.createAndSendToken(newUser._id);
 
@@ -59,6 +53,7 @@ class UserAuth {
         user: {
           firstName: newUser.firstName,
           lastName: newUser.lastName,
+          email: newUser.email,
           isAdmin: newUser.isAdmin,
           id: newUser._id,
           userRole: newUser.userRole,
@@ -78,7 +73,7 @@ class UserAuth {
       };
     }
 
-    const user = await this.findUser(email);
+    const user = await User.findUser(email);
     if (user.data === null) {
       return {
         status: 400,
@@ -102,6 +97,7 @@ class UserAuth {
     }
 
     const userToken = UserToken.createAndSendToken(user.data._id);
+
     return user !== null
       ? {
           status: 200,
@@ -118,19 +114,6 @@ class UserAuth {
           },
         }
       : user;
-  }
-
-  async findUser(email) {
-    const user = await User.findOne({ email });
-    return user !== null
-      ? {
-          status: 200,
-          data: user,
-        }
-      : {
-          status: 404,
-          data: user,
-        };
   }
 }
 

@@ -1,5 +1,4 @@
 const asyncHandler = require("../middlewares/asyncHandler");
-const User = require("../model/user");
 const createSendToken = require("../utils/createSendToken");
 const ErrorHandler = require("../utils/errorHandler");
 const { UserAuth } = require("../services/auth");
@@ -49,7 +48,7 @@ exports.login = asyncHandler(async (req, res, next) => {
     });
   } catch (err) {
     return res.status(500).json({
-      error: err.error,
+      error: err,
     });
   }
 });
