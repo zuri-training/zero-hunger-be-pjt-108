@@ -106,6 +106,7 @@ class UserAuth {
             user: {
               firstName: user.data.firstName,
               lastName: user.data.lastName,
+              email: user.data.email,
               isAdmin: user.data.isAdmin,
               id: user.data._id,
               userRole: user.data.userRole,
