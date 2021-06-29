@@ -1,5 +1,4 @@
 const express = require("express");
-const bodyParser = require("body-parser");
 const connectDB = require("./db/setup");
 require("dotenv").config(); //allows us to use the environmental variables in the .env
 const { PORT } = process.env; //create your own .env file outside the src directory
@@ -8,11 +7,8 @@ const app = express();
 const authRoute = require("./routes/auth");
 
 // Initialize Express middleware
-app.use(express.json({ extended: false }));
-
-// Initialize body parser middlware
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
 
 // Setup db || Connect to db
 connectDB();
