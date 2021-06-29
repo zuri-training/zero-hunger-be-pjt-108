@@ -5,8 +5,6 @@ const UserToken = new Token();
 const User = new UserModel();
 
 class UserAuth {
-  constructor() {}
-
   async signUp(firstName, lastName, email, password, cPassword) {
     if (!firstName || !lastName || !email || !password) {
       return {

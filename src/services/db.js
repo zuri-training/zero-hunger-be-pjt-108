@@ -1,8 +1,6 @@
 const User = require("../model/user");
 
 class UserModel {
-  constructor() {}
-
   async findUser(email) {
     const user = await User.findOne({ email });
     return user !== null
