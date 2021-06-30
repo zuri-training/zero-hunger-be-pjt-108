@@ -49,6 +49,7 @@ class UserAuth {
 
     return {
       status: 201,
+      message: "Account created successfully!",
       data: {
         user: {
           firstName: newUser.firstName,
@@ -106,6 +107,7 @@ class UserAuth {
             user: {
               firstName: user.data.firstName,
               lastName: user.data.lastName,
+              email: user.data.email,
               isAdmin: user.data.isAdmin,
               id: user.data._id,
               userRole: user.data.userRole,

@@ -26,6 +26,7 @@ exports.signUp = asyncHandler(async (req, res, next) => {
       data: newUser.data,
     });
   } catch (err) {
+    console.log(err);
     return res.status(500).json({
       error: err,
     });
