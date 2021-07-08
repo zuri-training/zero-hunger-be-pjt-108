@@ -3,27 +3,29 @@
  * 2. Start a local mongo server connection
 -------------------------**/
 // Setup Mongoose
-const mongoose = require('mongoose');
-require('dotenv').config();
-const {  MONGO_URI, connectionString } = process.env;
+const mongoose = require("mongoose");
+const dotenv = require("dotenv");
+
+dotenv.config()
+const { MONGO_URI, connectionString } = process.env;
 
 // Async/Await mongoose connection
 const connectDB = async () => {
   try {
-    await mongoose.connect(  MONGO_URI || connectionString, {
+    await mongoose.connect(MONGO_URI || connectionString, {
       // This property will stop unwanted warning in the console or client side
       useNewUrlParser: true,
       useCreateIndex: true,
       useUnifiedTopology: true,
-      useFindAndModify: false
+      useFindAndModify: false,
     });
-    console.log('Database connection successful...');
+    console.log("Database connection successful...");
   } catch (err) {
     console.log(err.message);
-    
+
     // Exit with failure
     process.exit(1);
   }
-}
+};
 
 module.exports = connectDB;
