@@ -20,15 +20,15 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true
     },
-    // role: {
-    //   type: String,
-    //   enum: ["individual", "admin", "organization", "ngo"],
-    //   default: "individual"
-    // },
-    // isAdmin: {
-    //   type: Boolean,
-    //   default: 0
-    // },
+    role: {
+      type: String,
+      enum: ["individual", "admin", "organization", "ngo"],
+      default: "individual"
+    },
+    isAdmin: {
+      type: Boolean,
+      default: 0
+    },
   },
   { timestamps: true }
 );
